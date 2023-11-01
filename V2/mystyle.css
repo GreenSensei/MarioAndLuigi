@@ -227,14 +227,14 @@
 }
 
 .menuitems {
-  height: 100%;
+  height: 580px;
   width: 400px;
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: space-around;
   align-content: space-around;
-  margin-top: 5%;
+  margin-top: 2%;
 }
 
 .pizzaimage {
