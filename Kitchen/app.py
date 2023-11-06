@@ -3,7 +3,7 @@ from flask import Flask, render_template, request, jsonify, Markup
 app = Flask(__name__)
 
 # Sample data for kitchen orders (product IDs and quantities)
-product_quantities = [0, 0, 0, 2, 2, 0]
+product_quantities = [0, 1, 0, 2, 2, 1]
 
 # Define the prices for each product
 product_prices = {
