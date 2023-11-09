@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Mario and Luigi's Pizzeria</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='mystyle.css') }}">
+    <link rel="icon" href="{{ url_for('static', filename='mariologo.png') }}">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+
+<body>
+    <script src="{{ url_for('static', filename='app.js') }}"></script>
+    <div class="mainpage">
+        <div class="overlay-content3">
+            <div class="section1">
+                <div class="topnav">
+                    <img class="minilogo" src="{{ url_for('static', filename='mariologo.png') }}">
+                </div>
+                <div class="toptext">
+                    <p class="greeting"><b>Ciao,</b> <br>How are you?</p>
+                </div>
+                <div class="menuitems">
+                    <button class="option2container" onclick="addToCart('Margherita Pizza', '€9.99')">
+                        <img class="pizzaimage" src="{{ url_for('static', filename='cheesepizza.png') }}">
+                        <p class="pizzatitle">Margherita Pizza</p>
+                        <p>€9.99</p>
+                    </button>
+                    
+                    <button class="option2container" onclick="addToCart('Salami Pizza', '€10.99')">
+                        <img class="pizzaimage" src="{{ url_for('static', filename='salamipizza.png') }}">
+                        <p class="pizzatitle">Salami Pizza</p>
+                        <p>€10.99</p>
+                    </button>
+                    
+                    <button class="option2container" onclick="addToCart('Hawaii Pizza', '€11.99')">
+                        <img class="pizzaimage" src="{{ url_for('static', filename='hawaiipizza.png') }}">
+                        <p class="pizzatitle">Hawaii Pizza</p>
+                        <p>€11.99</p>
+                    </button>
+                    
+                    <button class="option2container" onclick="addToCart('Meatlovers Pizza', '€12.99')">
+                        <img class="pizzaimage" src="{{ url_for('static', filename='bbqmeatloverspizza.png') }}">
+                        <p class="pizzatitle">Meatlovers Pizza</p>
+                        <p>€12.99</p>
+                    </button>
+                    
+                    <button class="option2container" onclick="addToCart('Pepperoni Pizza', '€10.99')">
+                        <img class="pizzaimage" src="{{ url_for('static', filename='pepperonipizza.png') }}">
+                        <p class="pizzatitle">Pepperoni Pizza</p>
+                        <p>€10.99</p>
+                    </button>
+                    
+                    <button class="option2container" onclick="addToCart('Veggie Pizza', '€12.99')">
+                        <img class="pizzaimage" src="{{ url_for('static', filename='veggiedeluxepizza.png') }}">
+                        <p class="pizzatitle">Veggie Pizza</p>
+                        <p>€12.99</p>
+                    </button>
+                    
+                </div>
+                <div class="goback">
+                    <a href="{{ url_for('start') }}">
+                        <button class="back">Back</button>
+                    </a>
+                </div>
+            </div>
+            <div class="section2">
+                <div class="orderdescription">
+                    <p class="ordertext">My<br>Order</p>
+                    <p class="subtitle">Take Out</p>
+                </div>
+                <hr>
+                <div class="cart">
+                    <p class="subtitle" id="cart-title">Cart is Empty</p>
+                    <ul id="cart-list">
+                        <!-- Cart items will be added here -->
+                    </ul>
+                </div>
+                <hr>
+                <div class="orderpricing">
+                    <p class="subtitle">Total</p>
+                    <p class="orderprice">€0.00</p>
+                    <button class="done" onclick="markOrderAsDone()">Done</button>
+                </div>
+            </div>
+            <script>
+                // Function to get the order quantities from the cart
+                function getOrderQuantities() {
+                    const cartItems = document.querySelectorAll('.cart-item');
+                    const quantities = [];
+            
+                    cartItems.forEach(item => {
+                        const quantityInput = item.querySelector('.quantity-input');
+                        const quantity = parseInt(quantityInput.value) || 0;
+                        quantities.push(quantity);
+                    });
+            
+                    return quantities;
+                }
+            
+                function markOrderAsDone() {
+                const cartData = [];
+
+                // Loop through the cart items and retrieve the quantities
+                const cartItems = document.querySelectorAll('.cart-item');
+                cartItems.forEach(item => {
+                    const quantity = parseInt(item.querySelector('.quantity-input').value);
+                    cartData.push(quantity);
+
+                    product_quantities[index] = quantity;
+                });
+
+                // Create a list of quantities in the same order as the products
+                const quantities = cartData;  // Use the cartData directly
+
+                // Send the quantities list to the server using an AJAX request
+                fetch('/complete_order', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ quantities: quantities })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    // Handle the server's response if needed
+                    console.log(data.message);
+
+                    // Redirect to the kitchen.html page after processing
+                    window.location.href = '/kitchen.html';
+                });
+            }
+
+            </script>
+        </div>
+    </div>
+</body>
+
+</html>

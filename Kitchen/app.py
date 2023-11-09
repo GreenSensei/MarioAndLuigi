@@ -1,12 +1,12 @@
-from flask import Flask, render_template, request, jsonify, Markup
+from flask import Flask, render_template, request, jsonify, json
 
 app = Flask(__name__)
 
-# Sample data for kitchen orders (product quantities and order types)
+# Initialize product_quantities as an empty list
 product_quantities = [
     (1, 0, 0, 3, 2, 0),
     (1, 2, 0, 0, 1, 3),
-    (0, 0, 2, 1, 0, 3),
+    (1, 0, 0, 0, 0, 1),
 ]
 
 # Define the prices for each product
@@ -19,8 +19,18 @@ product_prices = {
     'Veggie Pizza': 12.99,
 }
 
+menu_items = [
+    {"name": "Margherita Pizza", "price": 10},
+    {"name": "Salami Pizza", "price": 11},
+    {"name": "Hawaii Pizza", "price": 12},
+    {"name": "Meatlovers Pizza", "price": 13},
+    {"name": "Pepperoni Pizza", "price": 11},
+    {"name": "Veggie Pizza", "price": 13},
+]
+
 # Define order types (0 for "Eat In" and 1 for "Take Out")
 order_types = [0, 1, 0]  # Set the order types to "Eat In" by default
+order_id_counter = 1
 
 # Function to generate orders based on product quantities and prices
 def generate_orders(product_quantities, product_prices, order_types):
@@ -54,21 +64,51 @@ def generate_orders(product_quantities, product_prices, order_types):
 
     return orders
 
-@app.route('/')
-def index():
+@app.route('/kitchen.html')
+def kitchen():
     orders = generate_orders(product_quantities, product_prices, order_types)
 
     for order in orders:
-        order['product_name'] = Markup(order['product_name'])  # Use Markup to render HTML safely
+        order['product_name']
 
-    return render_template('index.html', orders=orders, order_types=order_types)
+    return render_template('kitchen.html', orders=orders, order_types=order_types)
 
-@app.route('/mark_order_ready', methods=['POST'])
-def mark_order_ready():
-    order_id = int(request.form.get('order_id'))
-    # Here, you can add your logic to mark the order as "Ready" (e.g., update a database)
-    # For demonstration purposes, we'll just return a JSON response
-    return jsonify({'message': f'Order #{order_id} marked as ready'})
+
+@app.route('/complete_order', methods=['POST'])
+def complete_order():
+    data = request.get_json()
+    quantities = data.get('quantities')
+
+    # Generate a new order with an incremented order ID
+    global order_id_counter  # Use the global order_id_counter variable
+    order = {
+        'id': order_id_counter,  # Use the current order ID
+        'product_quantities': quantities,
+    }
+
+    product_quantities.append(order)
+    
+    # Increment the order ID counter for the next order
+    order_id_counter += 1
+    
+    # Return a JSON response (for demonstration purposes)
+    return jsonify({'message': 'Order marked as complete'})
+
+@app.route('/')
+def index():
+    return render_template('index.html')
+
+@app.route('/start.html')
+def start():
+    return render_template('start.html')
+
+@app.route('/menu.html')
+def menu():
+    return render_template('menu.html')
+
+@app.route('/menutakeout.html')
+def menutakeout():
+    return render_template('menutakeout.html', menu_items=menu_items)
 
 if __name__ == '__main__':
     app.run(debug=True)

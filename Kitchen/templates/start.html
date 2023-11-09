@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Mario and Luigi's Pizzeria</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='mystyle.css') }}">
+    <link rel="icon" href="{{ url_for('static', filename='mariologo.png') }}">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+
+<body>
+    <div class="mainpage">
+        <div class="image-container">
+            <img class="mariobackground" src="{{ url_for('static', filename='mario_background.png') }}">
+        </div>
+        <div class="overlay-content2">
+            <img class="logo3" src="{{ url_for('static', filename='mariologo.png') }}">
+            <p class="prompt">Where will you be <br>eating today?</p>
+            <div class="optionscontainer">
+                <a href="{{ url_for('menu') }}">
+                    <button class="option1container">
+                        <div class="image1container">
+                            <img class="image1" src="{{ url_for('static', filename='eatin2.png') }}">
+                        </div>
+                        <div class="text1container">
+                            <p class="containertext">Eat In</p>
+                        </div>
+                    </button>
+                </a>
+                <a href="{{ url_for('menutakeout') }}">
+                    <button class="option1container">
+                        <div class="image2container">
+                            <img class="image2" src="{{ url_for('static', filename='takeout.png') }}">
+                        </div>
+                        <div class="text2container">
+                            <p class="containertext">Take Out</p>
+                        </div>
+                    </button>
+                </a>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

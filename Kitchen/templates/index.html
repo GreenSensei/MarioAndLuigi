@@ -1,55 +1,27 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+    <title>Mario and Luigi's Pizzeria</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='mystyle.css') }}">
+    <link rel="icon" href="{{ url_for('static', filename='mariologo.png') }}">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='mystyle.css') }}">
-    <title>Mario and Luigi's Pizzeria</title>
 </head>
-<body class="mainpage">
-    <div class="title">
-        <img class="logo" src="../static/mariologo.png">
-        <h1>Kitchen Orders</h1>
-    </div>
-    <div class="order-list">
-        {% for order in orders %}
-        <div class="order-section" id="order{{ order.id }}" style="background-color: rgb(212, 212, 212);">
-            <h2>Order #{{ order.id }}</h2>
-            <p>{{ order.product_name | safe }}</p>
-            <p>{{ order.order_type }}</p>
-            <p>Total Price: ${{ order.total_price }}</p>
-            <a class="order-button button" href="#" onclick="markOrderState({{ order.id }})">Start</a>
-            <a class="delete-button button" href="#" onclick="deleteOrder({{ order.id }})">Delete</a>
-        </div>
-        {% endfor %}
-    </div>
-    <script>
-        function markOrderState(orderId) {
-            const orderSection = document.getElementById('order' + orderId);
-            if (orderSection) {
-                const button = orderSection.querySelector('.order-button');
-                if (button) {
-                    if (orderSection.style.backgroundColor === 'lightgreen') {
-                        orderSection.style.backgroundColor = 'yellow';
-                        button.textContent = 'Prepared';
-                    } else if (orderSection.style.backgroundColor === 'yellow') {
-                        orderSection.style.backgroundColor = 'red';
-                        button.textContent = 'Done';
-                    } else {
-                        orderSection.style.backgroundColor = 'lightgreen';
-                        button.textContent = 'Start';
-                    }
-                }
-            }
-        }
 
-        function deleteOrder(orderId) {
-            const orderSection = document.getElementById('order' + orderId);
-            if (orderSection) {
-                // Delete the order section
-                orderSection.remove();
-            }
-        }
-    </script>
+<body>
+    <div class="mainpage">
+        <div class="image-container">
+            <img class="mariobackground" src="{{ url_for('static', filename='mario_background.png') }}">
+        </div>
+        <div class="overlay-content">
+            <img class="logo" src="{{ url_for('static', filename='mario_luigi_logo.png') }}">
+            <img class="mariojumping" src="{{ url_for('static', filename='mariojumping.gif') }}">
+            <form action="{{ url_for('start') }}">
+                <button class="order">Order</button>
+            </form>
+        </div>
+    </div>
 </body>
+
 </html>
