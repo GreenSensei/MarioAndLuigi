@@ -20,12 +20,12 @@ product_prices = {
 }
 
 menu_items = [
-    {"name": "Margherita Pizza", "price": 10},
-    {"name": "Salami Pizza", "price": 11},
-    {"name": "Hawaii Pizza", "price": 12},
-    {"name": "Meatlovers Pizza", "price": 13},
-    {"name": "Pepperoni Pizza", "price": 11},
-    {"name": "Veggie Pizza", "price": 13},
+    {"name": "Margherita Pizza", "price": 9.99},
+    {"name": "Salami Pizza", "price": 10.99},
+    {"name": "Hawaii Pizza", "price": 11.99},
+    {"name": "Meatlovers Pizza", "price": 12.99},
+    {"name": "Pepperoni Pizza", "price": 10.99},
+    {"name": "Veggie Pizza", "price": 12.99},
 ]
 
 # Define order types (0 for "Eat In" and 1 for "Take Out")
